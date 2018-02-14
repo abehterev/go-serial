@@ -1,4 +1,5 @@
 //
+// Copyright 2018, Andrey Bekhterev. All rights reserved.
 // Copyright 2014-2017 Cristian Maglie. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -8,7 +9,7 @@
 //   mksyscall.pl serial_openbsd.go
 // The generated stub is modified to make it compile under the "serial" package
 
-package serial // import "go.bug.st/serial.v1"
+package serial // import "github.com/abehterev/go-serial"
 
 import "syscall"
 

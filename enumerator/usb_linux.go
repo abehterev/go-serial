@@ -1,10 +1,11 @@
 //
+// Copyright 2018, Andrey Bekhterev. All rights reserved.
 // Copyright 2014-2017 Cristian Maglie. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 //
 
-package enumerator // import "go.bug.st/serial.v1/enumerator"
+package enumerator // import "github.com/abehterev/go-serial/enumerator"
 
 import (
 	"bufio"
@@ -12,7 +13,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"go.bug.st/serial.v1"
+	"abehterev/go-serial"
 )
 
 func nativeGetDetailedPortsList() ([]*PortDetails, error) {
@@ -76,21 +77,21 @@ func parseUSBSysFS(usbDevicePath string, details *PortDetails) error {
 	if err != nil {
 		return err
 	}
-	//manufacturer, err := readLine(filepath.Join(usbDevicePath, "manufacturer"))
-	//if err != nil {
-	//	return err
-	//}
-	//product, err := readLine(filepath.Join(usbDevicePath, "product"))
-	//if err != nil {
-	//	return err
-	//}
+	manufacturer, err := readLine(filepath.Join(usbDevicePath, "manufacturer"))
+	if err != nil {
+		return err
+	}
+	product, err := readLine(filepath.Join(usbDevicePath, "product"))
+	if err != nil {
+		return err
+	}
 
 	details.IsUSB = true
 	details.VID = vid
 	details.PID = pid
 	details.SerialNumber = serial
-	//details.Manufacturer = manufacturer
-	//details.Product = product
+	details.Manufacturer = manufacturer
+	details.Product = product
 	return nil
 }
 

@@ -1,15 +1,17 @@
 //
+// Copyright 2018, Andrey Bekhterev. All rights reserved.
 // Copyright 2014-2017 Cristian Maglie. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 //
 
-package enumerator // import "go.bug.st/serial.v1/enumerator"
+package enumerator // import "github.com/abehterev/go-serial/enumerator"
 
-// #cgo LDFLAGS: -framework CoreFoundation -framework IOKit -fconstant-cfstrings
+// #cgo LDFLAGS: -framework CoreFoundation -framework IOKit
 // #include <IOKit/IOKitLib.h>
 // #include <CoreFoundation/CoreFoundation.h>
 // #include <stdlib.h>
+// #define __CONSTANT_CFSTRINGS__ 1
 import "C"
 import (
 	"errors"
@@ -56,14 +58,16 @@ func extractPortInfo(service C.io_registry_entry_t) (*PortDetails, error) {
 		vid, _ := usbDevice.GetIntProperty("idVendor", C.kCFNumberSInt16Type)
 		pid, _ := usbDevice.GetIntProperty("idProduct", C.kCFNumberSInt16Type)
 		serialNumber, _ := usbDevice.GetStringProperty("USB Serial Number")
-		//product, _ := usbDevice.GetStringProperty("USB Product Name")
-		//manufacturer, _ := usbDevice.GetStringProperty("USB Vendor Name")
+		product, _ := usbDevice.GetStringProperty("USB Product Name")
+		manufacturer, _ := usbDevice.GetStringProperty("USB Vendor Name")
 		//fmt.Println(product + " - " + manufacturer)
 
 		port.IsUSB = true
-		port.VID = fmt.Sprintf("%04X", vid)
-		port.PID = fmt.Sprintf("%04X", pid)
+		port.VID = fmt.Sprintf("%#04x", vid)
+		port.PID = fmt.Sprintf("%#04x", pid)
 		port.SerialNumber = serialNumber
+		port.Product = product
+		port.Manufacturer = manufacturer
 	}
 	return port, nil
 }
