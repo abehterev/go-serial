@@ -63,8 +63,8 @@ func extractPortInfo(service C.io_registry_entry_t) (*PortDetails, error) {
 		//fmt.Println(product + " - " + manufacturer)
 
 		port.IsUSB = true
-		port.VID = fmt.Sprintf("%#04x", vid)
-		port.PID = fmt.Sprintf("%#04x", pid)
+		port.VID = fmt.Sprintf("%04X", vid)
+		port.PID = fmt.Sprintf("%04X", pid)
 		port.SerialNumber = serialNumber
 		port.Product = product
 		port.Manufacturer = manufacturer
